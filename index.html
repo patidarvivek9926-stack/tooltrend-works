@@ -1,1064 +1,287 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ToolTrend Works | Best AI Tools, Apps & Software Picks</title>
-  <meta name="description" content="Discover trending AI tools, productivity apps, creator software, and smart work tools with practical comparisons, quick reviews, pricing snapshots, and curated recommendations." />
-  <meta name="keywords" content="best AI tools 2026, productivity tools, creator tools, affiliate website, software comparison, AI tools for students, AI tools for business" />
-  <meta name="theme-color" content="#0f172a" />
-  <meta property="og:title" content="ToolTrend Works | Best AI Tools, Apps & Software Picks" />
-  <meta property="og:description" content="A clean affiliate-ready website for trending AI tools, software picks, and practical comparisons." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #081120;
-      --bg-soft: #0f172a;
-      --card: rgba(15, 23, 42, 0.82);
-      --card-border: rgba(148, 163, 184, 0.18);
-      --text: #e5eefc;
-      --muted: #93a4bd;
-      --primary: #7c3aed;
-      --primary-2: #06b6d4;
-      --accent: #22c55e;
-      --warning: #f59e0b;
-      --danger: #f43f5e;
-      --white: #ffffff;
-      --shadow: 0 10px 30px rgba(0,0,0,0.30);
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --max: 1200px;
-    }
+import React, { useMemo, useState } from "react";
+import { Search, ShoppingBag, Star, ArrowRight, Filter, Heart, ShieldCheck, Truck, Sparkles } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(124,58,237,0.22), transparent 28%),
-        radial-gradient(circle at top right, rgba(6,182,212,0.16), transparent 24%),
-        linear-gradient(180deg, #050b16 0%, #081120 40%, #0b1324 100%);
-      line-height: 1.6;
-    }
+const products = [
+  {
+    id: 1,
+    name: "Wireless Noise-Canceling Headphones",
+    category: "Electronics",
+    price: "₹7,999",
+    rating: 4.8,
+    tag: "Best Seller",
+    description: "Premium sound, deep bass, long battery backup, and a sleek modern finish.",
+    image:
+      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80",
+    url: "https://your-affiliate-link-1.com",
+  },
+  {
+    id: 2,
+    name: "Smart Fitness Band",
+    category: "Wearables",
+    price: "₹2,499",
+    rating: 4.5,
+    tag: "Trending",
+    description: "Track heart rate, sleep, activity, and stay connected with smart notifications.",
+    image:
+      "https://images.unsplash.com/photo-1510017803434-a899398421b3?auto=format&fit=crop&w=1200&q=80",
+    url: "https://your-affiliate-link-2.com",
+  },
+  {
+    id: 3,
+    name: "Minimal Desk Lamp",
+    category: "Home",
+    price: "₹1,899",
+    rating: 4.6,
+    tag: "Editor Pick",
+    description: "Modern study lamp with warm light tone and clean desk-friendly design.",
+    image:
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
+    url: "https://your-affiliate-link-3.com",
+  },
+  {
+    id: 4,
+    name: "Portable Blender Bottle",
+    category: "Kitchen",
+    price: "₹1,599",
+    rating: 4.3,
+    tag: "Popular",
+    description: "Compact and travel-friendly blender for smoothies, shakes, and quick mixing.",
+    image:
+      "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80",
+    url: "https://your-affiliate-link-4.com",
+  },
+  {
+    id: 5,
+    name: "Ergonomic Office Chair",
+    category: "Furniture",
+    price: "₹12,499",
+    rating: 4.7,
+    tag: "Premium",
+    description: "Comfort-focused office chair with lumbar support and elegant styling.",
+    image:
+      "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?auto=format&fit=crop&w=1200&q=80",
+    url: "https://your-affiliate-link-5.com",
+  },
+  {
+    id: 6,
+    name: "Skin Care Essentials Kit",
+    category: "Beauty",
+    price: "₹1,299",
+    rating: 4.4,
+    tag: "New",
+    description: "A simple and effective skincare combo designed for a clean daily routine.",
+    image:
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
+    url: "https://your-affiliate-link-6.com",
+  },
+];
 
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
-    .container { width: min(92%, var(--max)); margin: 0 auto; }
+const categories = ["All", ...new Set(products.map((p) => p.category))];
 
-    .topbar {
-      background: rgba(245, 158, 11, 0.12);
-      color: #fde68a;
-      border-bottom: 1px solid rgba(245, 158, 11, 0.18);
-      font-size: 14px;
-    }
-    .topbar .container {
-      padding: 10px 0;
-      display: flex;
-      justify-content: center;
-      text-align: center;
-    }
+export default function AffiliateProductSite() {
+  const [query, setQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(8,17,32,0.72);
-      border-bottom: 1px solid rgba(148,163,184,0.12);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 16px 0;
-    }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 800;
-      letter-spacing: 0.2px;
-    }
-    .logo-badge {
-      width: 42px;
-      height: 42px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      display: grid;
-      place-items: center;
-      box-shadow: var(--shadow);
-      font-size: 17px;
-      font-weight: 800;
-    }
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: var(--muted);
-      font-size: 15px;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+  const filteredProducts = useMemo(() => {
+    return products.filter((product) => {
+      const matchesCategory =
+        selectedCategory === "All" || product.category === selectedCategory;
+      const matchesQuery =
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.description.toLowerCase().includes(query.toLowerCase()) ||
+        product.category.toLowerCase().includes(query.toLowerCase());
+      return matchesCategory && matchesQuery;
+    });
+  }, [query, selectedCategory]);
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 18px;
-      border-radius: 14px;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: 0.25s ease;
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      color: white;
-      box-shadow: var(--shadow);
-    }
-    .btn-primary:hover { transform: translateY(-2px); }
-    .btn-secondary {
-      border-color: rgba(148,163,184,0.18);
-      background: rgba(255,255,255,0.02);
-      color: var(--text);
-    }
-    .btn-secondary:hover { background: rgba(255,255,255,0.06); }
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <section className="relative overflow-hidden border-b bg-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-white to-slate-100" />
+        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-2 md:px-10 lg:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-col justify-center"
+          >
+            <Badge className="mb-4 w-fit rounded-full px-4 py-1 text-sm">Top Picks</Badge>
+            <h1 className="max-w-xl text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+              Discover products that look good and perform better.
+            </h1>
+            <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 md:text-lg">
+              A clean, modern product showcase website where you can list multiple items,
+              organize them by category, and send visitors directly to the product page.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#products">
+                <Button className="rounded-2xl px-6 py-6 text-base">
+                  Browse Products <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </a>
+              <Button variant="outline" className="rounded-2xl px-6 py-6 text-base">
+                <ShoppingBag className="mr-2 h-4 w-4" /> Clean UI Layout
+              </Button>
+            </div>
+            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl border bg-white p-4 shadow-sm">
+                <div className="flex items-center gap-2 text-sm font-medium"><ShieldCheck className="h-4 w-4" /> Trusted picks</div>
+              </div>
+              <div className="rounded-2xl border bg-white p-4 shadow-sm">
+                <div className="flex items-center gap-2 text-sm font-medium"><Truck className="h-4 w-4" /> Fast access</div>
+              </div>
+              <div className="rounded-2xl border bg-white p-4 shadow-sm">
+                <div className="flex items-center gap-2 text-sm font-medium"><Sparkles className="h-4 w-4" /> Smooth design</div>
+              </div>
+            </div>
+          </motion.div>
 
-    .hero {
-      padding: 72px 0 32px;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.12fr 0.88fr;
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: rgba(124,58,237,0.16);
-      border: 1px solid rgba(124,58,237,0.22);
-      color: #d8b4fe;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: clamp(2.3rem, 5vw, 4.7rem);
-      line-height: 1.05;
-      margin: 0 0 18px;
-      letter-spacing: -0.04em;
-    }
-    .hero p {
-      color: var(--muted);
-      font-size: 18px;
-      max-width: 62ch;
-      margin: 0 0 26px;
-    }
-    .hero-cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 26px;
-    }
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .stat {
-      padding: 18px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-    }
-    .stat h3 {
-      margin: 0;
-      font-size: 1.6rem;
-    }
-    .stat p {
-      margin: 6px 0 0;
-      font-size: 14px;
-      color: var(--muted);
-    }
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="grid gap-4 sm:grid-cols-2"
+          >
+            {products.slice(0, 4).map((item) => (
+              <div key={item.id} className="overflow-hidden rounded-3xl border bg-white shadow-sm">
+                <img src={item.image} alt={item.name} className="h-48 w-full object-cover" />
+                <div className="p-4">
+                  <div className="flex items-center justify-between gap-3">
+                    <Badge variant="secondary" className="rounded-full">{item.tag}</Badge>
+                    <div className="flex items-center gap-1 text-sm text-slate-600">
+                      <Star className="h-4 w-4 fill-current" /> {item.rating}
+                    </div>
+                  </div>
+                  <h3 className="mt-3 text-base font-semibold">{item.name}</h3>
+                  <p className="mt-1 text-sm text-slate-600">{item.price}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
 
-    .hero-card {
-      background: linear-gradient(180deg, rgba(15,23,42,0.86), rgba(12,20,38,0.92));
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -25% auto auto -10%;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(124,58,237,0.45), transparent 65%);
-      pointer-events: none;
-    }
-    .tool-list {
-      display: grid;
-      gap: 14px;
-      position: relative;
-      z-index: 1;
-    }
-    .tool-item {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 14px;
-      padding: 16px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(148,163,184,0.12);
-    }
-    .tool-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, rgba(124,58,237,0.28), rgba(6,182,212,0.28));
-      font-weight: 800;
-    }
-    .tool-item strong { display: block; font-size: 15px; }
-    .tool-item span { color: var(--muted); font-size: 13px; }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      padding: 7px 11px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      background: rgba(34,197,94,0.12);
-      color: #86efac;
-      border: 1px solid rgba(34,197,94,0.18);
-    }
+      <section id="products" className="mx-auto max-w-7xl px-6 py-12 md:px-10 lg:px-12">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h2 className="text-3xl font-bold tracking-tight">Featured Products</h2>
+            <p className="mt-2 text-slate-600">Search, filter, and manage multiple product links in one clean interface.</p>
+          </div>
+          <div className="flex w-full flex-col gap-3 sm:flex-row md:w-auto">
+            <div className="relative min-w-[280px]">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search products..."
+                className="h-11 rounded-2xl border-slate-200 pl-10"
+              />
+            </div>
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border bg-white p-2 shadow-sm">
+              <Filter className="ml-1 h-4 w-4 text-slate-500" />
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`rounded-xl px-3 py-2 text-sm transition ${
+                    selectedCategory === category
+                      ? "bg-slate-900 text-white"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
-    section {
-      padding: 42px 0;
-    }
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: end;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-    .section-head h2 {
-      margin: 0;
-      font-size: clamp(1.65rem, 3vw, 2.6rem);
-      letter-spacing: -0.03em;
-    }
-    .section-head p {
-      margin: 8px 0 0;
-      max-width: 70ch;
-      color: var(--muted);
-    }
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          {filteredProducts.map((product, index) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <Card className="group overflow-hidden rounded-[24px] border-0 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="h-64 w-full object-cover transition duration-500 group-hover:scale-105"
+                  />
+                  <button className="absolute right-4 top-4 rounded-full bg-white/90 p-2 shadow-md backdrop-blur">
+                    <Heart className="h-4 w-4" />
+                  </button>
+                </div>
+                <CardContent className="p-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <Badge variant="secondary" className="rounded-full">{product.category}</Badge>
+                    <div className="flex items-center gap-1 text-sm text-slate-600">
+                      <Star className="h-4 w-4 fill-current" /> {product.rating}
+                    </div>
+                  </div>
+                  <h3 className="mt-4 text-xl font-semibold leading-tight">{product.name}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-600">{product.description}</p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-lg font-bold">{product.price}</span>
+                    <Badge className="rounded-full px-3 py-1">{product.tag}</Badge>
+                  </div>
+                  <div className="mt-5 flex gap-3">
+                    <a href={product.url} target="_blank" rel="noreferrer" className="flex-1">
+                      <Button className="h-11 w-full rounded-2xl">View Product</Button>
+                    </a>
+                    <Button variant="outline" className="h-11 rounded-2xl">Details</Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
 
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .tag {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(148,163,184,0.14);
-      color: #d8e3f6;
-      font-size: 14px;
-    }
+        {filteredProducts.length === 0 && (
+          <div className="rounded-3xl border border-dashed bg-white p-10 text-center shadow-sm">
+            <h3 className="text-xl font-semibold">No products found</h3>
+            <p className="mt-2 text-slate-600">Try a different search term or switch category.</p>
+          </div>
+        )}
+      </section>
 
-    .grid-3, .grid-4, .grid-2 {
-      display: grid;
-      gap: 18px;
-    }
-    .grid-4 { grid-template-columns: repeat(4, 1fr); }
-    .grid-3 { grid-template-columns: repeat(3, 1fr); }
-    .grid-2 { grid-template-columns: repeat(2, 1fr); }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-xl);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      height: 100%;
-    }
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-      letter-spacing: -0.02em;
-    }
-    .card p {
-      margin: 0 0 16px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .product-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      position: relative;
-    }
-    .product-card .label-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .product-card .score {
-      color: #fcd34d;
-      font-weight: 700;
-      font-size: 14px;
-    }
-    .feature-list {
-      margin: 0;
-      padding-left: 18px;
-      color: #dbe6f8;
-      font-size: 14px;
-    }
-    .feature-list li { margin-bottom: 8px; }
-    .price-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: auto;
-      padding-top: 8px;
-    }
-    .price {
-      font-weight: 800;
-      font-size: 1.15rem;
-    }
-    .subtle {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .comparison {
-      overflow: auto;
-      border-radius: 22px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow);
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 860px;
-      background: rgba(15,23,42,0.9);
-    }
-    th, td {
-      padding: 18px 16px;
-      text-align: left;
-      border-bottom: 1px solid rgba(148,163,184,0.12);
-      vertical-align: top;
-    }
-    th {
-      color: #cbd5e1;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: rgba(255,255,255,0.02);
-    }
-    td { color: #e6eefc; font-size: 14px; }
-    .yes { color: #86efac; font-weight: 700; }
-    .maybe { color: #fcd34d; font-weight: 700; }
-
-    .blog-card {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .blog-thumb {
-      border-radius: 18px;
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      border: 1px solid rgba(148,163,184,0.12);
-    }
-    .blog-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .newsletter {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 24px;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(124,58,237,0.18), rgba(6,182,212,0.12));
-      border: 1px solid rgba(124,58,237,0.2);
-      border-radius: 28px;
-      padding: 30px;
-      box-shadow: var(--shadow);
-    }
-    .newsletter h3 {
-      margin: 0 0 8px;
-      font-size: 1.8rem;
-    }
-    .newsletter p {
-      margin: 0;
-      color: #d7e4f6;
-    }
-    .newsletter-form {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: end;
-    }
-    .newsletter input {
-      min-width: 260px;
-      flex: 1;
-      padding: 14px 16px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      color: var(--white);
-      outline: none;
-    }
-
-    .info-box {
-      padding: 18px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.035);
-      border: 1px solid rgba(148,163,184,0.12);
-      color: #d9e7fb;
-      margin-top: 14px;
-      font-size: 14px;
-    }
-
-    .steps {
-      counter-reset: step;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-    .step {
-      position: relative;
-      padding: 24px 22px 22px;
-      background: var(--card);
-      border-radius: 22px;
-      border: 1px solid var(--card-border);
-      box-shadow: var(--shadow);
-    }
-    .step::before {
-      counter-increment: step;
-      content: counter(step);
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-2));
-      font-weight: 800;
-      margin-bottom: 16px;
-    }
-    .step h3 { margin: 0 0 10px; }
-    .step p { margin: 0; color: var(--muted); }
-
-    .faq-item {
-      margin-bottom: 14px;
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.03);
-    }
-    .faq-item summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 18px 20px;
-      font-weight: 700;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .faq-item summary::-webkit-details-marker { display: none; }
-    .faq-content {
-      padding: 0 20px 18px;
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    footer {
-      padding: 34px 0 50px;
-      border-top: 1px solid rgba(148,163,184,0.12);
-      color: var(--muted);
-    }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 0.7fr 0.7fr 0.7fr;
-      gap: 22px;
-    }
-    .footer-grid h4 {
-      margin: 0 0 10px;
-      color: var(--white);
-    }
-    .footer-links {
-      display: grid;
-      gap: 10px;
-      font-size: 14px;
-    }
-    .copyright {
-      margin-top: 28px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .mobile-menu {
-      display: none;
-      background: none;
-      color: var(--white);
-      border: 1px solid rgba(148,163,184,0.14);
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-weight: 700;
-    }
-
-    @media (max-width: 980px) {
-      .hero-grid,
-      .newsletter,
-      .grid-4,
-      .grid-3,
-      .grid-2,
-      .steps,
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero-stats { grid-template-columns: 1fr; }
-      .newsletter-form { justify-content: start; }
-      .nav-links, .nav-actions .btn-secondary { display: none; }
-      .mobile-menu { display: inline-flex; }
-    }
-
-    @media (max-width: 640px) {
-      .hero { padding-top: 40px; }
-      .nav { padding: 14px 0; }
-      .card, .hero-card, .newsletter, .step { padding: 18px; }
-      h1 { font-size: 2.25rem; }
-      .hero p { font-size: 16px; }
-    }
-  </style>
-</head>
-<body>
-  <div class="topbar">
-    <div class="container">
-      Affiliate Disclosure: Some links on this website may be affiliate links. If you buy through them, we may earn a commission at no extra cost to you.
+      <section className="border-t bg-white">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 md:grid-cols-2 md:px-10 lg:px-12">
+          <div>
+            <h3 className="text-2xl font-bold">Why this layout works</h3>
+            <p className="mt-3 max-w-xl text-slate-600">
+              This structure is built for speed, clarity, and easy product expansion. You can keep adding cards,
+              categories, images, and links without changing the core design.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-3xl border bg-slate-50 p-5">
+              <h4 className="font-semibold">Scalable product list</h4>
+              <p className="mt-2 text-sm text-slate-600">Just duplicate an object inside the products array and paste the new link.</p>
+            </div>
+            <div className="rounded-3xl border bg-slate-50 p-5">
+              <h4 className="font-semibold">Modern UI</h4>
+              <p className="mt-2 text-sm text-slate-600">Rounded cards, search, filters, hover effects, and a premium storefront feel.</p>
+            </div>
+            <div className="rounded-3xl border bg-slate-50 p-5">
+              <h4 className="font-semibold">Mobile friendly</h4>
+              <p className="mt-2 text-sm text-slate-600">Responsive layout works well on desktop, tablet, and phone screens.</p>
+            </div>
+            <div className="rounded-3xl border bg-slate-50 p-5">
+              <h4 className="font-semibold">Easy branding</h4>
+              <p className="mt-2 text-sm text-slate-600">You can replace title, logo, colors, hero text, and product categories anytime.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  </div>
-
-  <header>
-    <div class="container nav">
-      <a href="#home" class="logo">
-        <div class="logo-badge">TW</div>
-        <div>
-          <div>ToolTrend Works</div>
-          <div style="font-size:12px;color:var(--muted);font-weight:600;">AI tools, apps & smart picks</div>
-        </div>
-      </a>
-      <nav class="nav-links">
-        <a href="#trending">Trending Picks</a>
-        <a href="#comparison">Compare</a>
-        <a href="#guides">Guides</a>
-        <a href="#affiliate">Affiliate</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <div class="nav-actions">
-        <a href="#newsletter" class="btn btn-secondary">Get Weekly Picks</a>
-        <a href="#trending" class="btn btn-primary">Explore Tools</a>
-        <button class="mobile-menu" aria-label="Menu">Menu</button>
-      </div>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Trending niche + affiliate-ready website</div>
-          <h1>Build smarter with the best AI tools, creator apps, and productivity software.</h1>
-          <p>
-            This website is built around a strong 2026-friendly niche: software recommendations, AI tools, work apps, and creator utilities. It is easier to update, easier to monetize with affiliate links, and much safer for SEO than random trending-news content.
-          </p>
-          <div class="hero-cta">
-            <a href="#trending" class="btn btn-primary">See Top Picks</a>
-            <a href="#affiliate" class="btn btn-secondary">How to add affiliate links</a>
-          </div>
-          <div class="hero-stats">
-            <div class="stat">
-              <h3>24+</h3>
-              <p>starter content blocks ready for scaling</p>
-            </div>
-            <div class="stat">
-              <h3>SEO</h3>
-              <p>clean headings, metadata, internal sections, FAQ-ready</p>
-            </div>
-            <div class="stat">
-              <h3>Fast</h3>
-              <p>single-file static site perfect for GitHub Pages</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-card">
-          <div class="tool-list">
-            <div class="tool-item">
-              <div class="tool-icon">AI</div>
-              <div>
-                <strong>Best AI writing tools</strong>
-                <span>For blogs, emails, landing pages, and content teams</span>
-              </div>
-              <div class="pill">High intent</div>
-            </div>
-            <div class="tool-item">
-              <div class="tool-icon">VD</div>
-              <div>
-                <strong>Video & editing apps</strong>
-                <span>Great for creators, Reels editors, YouTubers, and agencies</span>
-              </div>
-              <div class="pill">Trending</div>
-            </div>
-            <div class="tool-item">
-              <div class="tool-icon">PM</div>
-              <div>
-                <strong>Productivity & project tools</strong>
-                <span>Useful for students, startups, remote teams, and freelancers</span>
-              </div>
-              <div class="pill">Evergreen</div>
-            </div>
-            <div class="tool-item">
-              <div class="tool-icon">DS</div>
-              <div>
-                <strong>Design & image generators</strong>
-                <span>Another strong affiliate cluster with comparison-search demand</span>
-              </div>
-              <div class="pill">Scaleable</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>What this site is built for</h2>
-            <p>Instead of chasing random daily trends, this website targets high-search, high-intent topics that can rank better over time and convert better with affiliate links.</p>
-          </div>
-        </div>
-        <div class="tags">
-          <div class="tag">AI tools for students</div>
-          <div class="tag">Best writing apps</div>
-          <div class="tag">Video editing software</div>
-          <div class="tag">Productivity tools</div>
-          <div class="tag">Best tools for creators</div>
-          <div class="tag">Free vs paid comparisons</div>
-          <div class="tag">Software for small business</div>
-          <div class="tag">Affiliate-ready buying guides</div>
-        </div>
-      </div>
-    </section>
-
-    <section id="trending">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Trending tool categories to publish on</h2>
-            <p>These sections are structured like category pages. Each card can become its own blog post, comparison page, or ranked roundup article later.</p>
-          </div>
-          <a class="btn btn-secondary" href="#guides">See article ideas</a>
-        </div>
-        <div class="grid-4">
-          <article class="card product-card">
-            <div class="label-row">
-              <div class="pill">AI Category</div>
-              <div class="score">★★★★★</div>
-            </div>
-            <h3>AI Writing Assistants</h3>
-            <p>Target people searching for blog, email, ad copy, notes, and SEO content creation tools.</p>
-            <ul class="feature-list">
-              <li>Best AI writing tools for beginners</li>
-              <li>Free vs paid plans</li>
-              <li>Best picks for students & freelancers</li>
-            </ul>
-            <div class="price-row">
-              <div>
-                <div class="price">High buyer intent</div>
-                <div class="subtle">Great for review pages</div>
-              </div>
-              <a href="#affiliate" class="btn btn-primary">Promote</a>
-            </div>
-          </article>
-
-          <article class="card product-card">
-            <div class="label-row">
-              <div class="pill">Creator Category</div>
-              <div class="score">★★★★☆</div>
-            </div>
-            <h3>Video Editing Tools</h3>
-            <p>Good for YouTubers, short-form editors, agencies, online teachers, and social media creators.</p>
-            <ul class="feature-list">
-              <li>Best AI video editors</li>
-              <li>Subtitle and caption tools</li>
-              <li>Fast content repurposing apps</li>
-            </ul>
-            <div class="price-row">
-              <div>
-                <div class="price">Strong niche</div>
-                <div class="subtle">Content + comparison friendly</div>
-              </div>
-              <a href="#affiliate" class="btn btn-primary">Promote</a>
-            </div>
-          </article>
-
-          <article class="card product-card">
-            <div class="label-row">
-              <div class="pill">Work Category</div>
-              <div class="score">★★★★☆</div>
-            </div>
-            <h3>Productivity Suites</h3>
-            <p>Target searchers looking for note-taking, team workflow, automation, project planning, and docs tools.</p>
-            <ul class="feature-list">
-              <li>Best tools for remote teams</li>
-              <li>Best productivity apps for students</li>
-              <li>Task manager and workspace comparisons</li>
-            </ul>
-            <div class="price-row">
-              <div>
-                <div class="price">Evergreen demand</div>
-                <div class="subtle">Great long-term content</div>
-              </div>
-              <a href="#affiliate" class="btn btn-primary">Promote</a>
-            </div>
-          </article>
-
-          <article class="card product-card">
-            <div class="label-row">
-              <div class="pill">Design Category</div>
-              <div class="score">★★★★☆</div>
-            </div>
-            <h3>Design & Image Apps</h3>
-            <p>Useful for social post creation, brand design, logos, thumbnails, product mockups, and presentations.</p>
-            <ul class="feature-list">
-              <li>Best design tools for non-designers</li>
-              <li>Template builders and AI image apps</li>
-              <li>Logo, banner, and thumbnail software</li>
-            </ul>
-            <div class="price-row">
-              <div>
-                <div class="price">Visual niche</div>
-                <div class="subtle">Good for affiliate callouts</div>
-              </div>
-              <a href="#affiliate" class="btn btn-primary">Promote</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="comparison">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Sample comparison block</h2>
-            <p>This section is the most important for affiliate SEO. People often search with buying intent when they want “best”, “vs”, “pricing”, “for beginners”, or “for business”.</p>
-          </div>
-        </div>
-        <div class="comparison">
-          <table>
-            <thead>
-              <tr>
-                <th>Tool Type</th>
-                <th>Best For</th>
-                <th>Why It Converts</th>
-                <th>Good Affiliate Format</th>
-                <th>SEO Angle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>AI Writing Tools</td>
-                <td>Students, bloggers, agencies</td>
-                <td>People compare pricing, speed, quality, and templates</td>
-                <td class="yes">Review + roundup + alternatives page</td>
-                <td>best AI writing tools / alternatives / pricing</td>
-              </tr>
-              <tr>
-                <td>Video Editors</td>
-                <td>Reels creators, YouTubers</td>
-                <td>High tool-switching behavior and feature comparison intent</td>
-                <td class="yes">Best for beginners / best for shorts</td>
-                <td>AI video tools / subtitle generators / editor vs editor</td>
-              </tr>
-              <tr>
-                <td>Project Management</td>
-                <td>Teams and startups</td>
-                <td>Searchers want workflows, dashboards, automation, and pricing</td>
-                <td class="maybe">Use-case article + comparison table</td>
-                <td>best project management tools for small teams</td>
-              </tr>
-              <tr>
-                <td>Design Apps</td>
-                <td>Freelancers and social teams</td>
-                <td>Visual buyers like quick feature snapshots and examples</td>
-                <td class="yes">Template gallery + “best for” lists</td>
-                <td>best design tools for social media</td>
-              </tr>
-              <tr>
-                <td>Automation Tools</td>
-                <td>Business owners</td>
-                <td>Strong recurring subscription commissions in some programs</td>
-                <td class="yes">Automation guides + workflows</td>
-                <td>best automation tools for small business</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <section id="guides">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Starter SEO article ideas</h2>
-            <p>You can turn these into individual blog posts and link each one to a category page or a comparison page.</p>
-          </div>
-        </div>
-        <div class="grid-3">
-          <article class="card blog-card">
-            <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="AI tools workspace"></div>
-            <div class="blog-meta"><span>Guide</span><span>8 min read</span><span>High intent</span></div>
-            <h3>Best AI tools for students in 2026</h3>
-            <p>Target users who want writing, note-taking, presentation, and study-support tools.</p>
-            <a href="#" class="btn btn-secondary">Read article</a>
-          </article>
-
-          <article class="card blog-card">
-            <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Software comparison"></div>
-            <div class="blog-meta"><span>Comparison</span><span>10 min read</span><span>Affiliate-ready</span></div>
-            <h3>Best AI writing tools for blogs and websites</h3>
-            <p>Perfect roundup page for pricing, pros and cons, and free-plan comparison.</p>
-            <a href="#" class="btn btn-secondary">Read article</a>
-          </article>
-
-          <article class="card blog-card">
-            <div class="blog-thumb"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Remote team workflow"></div>
-            <div class="blog-meta"><span>Roundup</span><span>9 min read</span><span>Evergreen</span></div>
-            <h3>Best productivity tools for remote work</h3>
-            <p>Great for team software, note apps, project boards, and workflow stack content.</p>
-            <a href="#" class="btn btn-secondary">Read article</a>
-          </article>
-        </div>
-        <div class="info-box">
-          Extra article ideas: best video editing tools for YouTube shorts, best AI tools for freelancers, best note-taking apps for college, Canva alternatives, best AI subtitle tools, Notion alternatives, best apps for social media managers, best free automation tools, best AI presentation tools, and best design tools for small business.
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="newsletter" id="newsletter">
-          <div>
-            <h3>Get weekly tool picks</h3>
-            <p>Use this section to build email subscribers. Email traffic is great for affiliate clicks because you can send roundup posts, deals, and tool alternatives.</p>
-          </div>
-          <form class="newsletter-form" onsubmit="subscribeUser(event)">
-            <input type="email" placeholder="Enter your email address" required>
-            <button class="btn btn-primary" type="submit">Subscribe</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <section id="affiliate">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>How to add affiliate links on this site</h2>
-            <p>Replace the placeholder links with your real affiliate URLs from Amazon, Impact, PartnerStack, Digistore24, Admitad, Cuelinks, or direct SaaS partner programs.</p>
-          </div>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <h3>Join affiliate programs</h3>
-            <p>Pick 5 to 10 good programs in one niche. For this site, software and AI tools are better than random products because they are easier to compare and often have better commission structures.</p>
-          </div>
-          <div class="step">
-            <h3>Replace button links</h3>
-            <p>In the code, buttons currently use <strong>href="#"</strong> or section links. Change those to your affiliate URLs like <strong>https://partner-link.com/offer123</strong>.</p>
-          </div>
-          <div class="step">
-            <h3>Add disclosures clearly</h3>
-            <p>Keep a visible affiliate disclosure near the top, on review pages, and inside the footer or policy pages. Do not hide it.</p>
-          </div>
-        </div>
-
-        <div class="grid-2" style="margin-top:18px;">
-          <div class="card">
-            <h3>Example affiliate button code</h3>
-            <p>Paste your affiliate URL in place of the example link below.</p>
-<pre style="white-space:pre-wrap;background:#020617;border:1px solid rgba(148,163,184,0.16);padding:16px;border-radius:16px;color:#dbeafe;overflow:auto;">&lt;a href="https://your-affiliate-link.com/tool-offer" class="btn btn-primary" target="_blank" rel="sponsored nofollow"&gt;Try This Tool&lt;/a&gt;</pre>
-            <div class="info-box">Use <strong>rel="sponsored nofollow"</strong> on affiliate links. Keep buttons honest like “View pricing”, “Try free”, or “See official site”.</div>
-          </div>
-          <div class="card">
-            <h3>Where affiliate links work best</h3>
-            <ul class="feature-list">
-              <li>Top 10 roundup pages</li>
-              <li>Tool comparison pages like A vs B</li>
-              <li>Best tools for a use-case page</li>
-              <li>Pricing and alternatives articles</li>
-              <li>Dedicated review pages with pros/cons</li>
-            </ul>
-            <div class="info-box">Best practice: mix affiliate links with real information, screenshots, pros/cons, and practical use-cases. Thin pages convert worse and may rank worse.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="faq">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Frequently asked questions</h2>
-            <p>This helps both users and SEO. FAQ content can answer trust, pricing, and niche questions clearly.</p>
-          </div>
-        </div>
-
-        <details class="faq-item" open>
-          <summary>Why is this website niche better than random trending news?<span>+</span></summary>
-          <div class="faq-content">Because software and AI tool queries are easier to monetize with affiliate links, easier to update, and safer for long-term SEO than chasing one-day trends with thin content.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Can I use this website on GitHub Pages with my .works domain?<span>+</span></summary>
-          <div class="faq-content">Yes. This is a static HTML website, so you can upload it to a GitHub repository, enable GitHub Pages, and then connect your .works domain in the Pages custom-domain settings and your DNS panel.</div>
-        </details>
-        <details class="faq-item">
-          <summary>How many articles should I publish first?<span>+</span></summary>
-          <div class="faq-content">Start with 10 to 20 strong pages: 3 category pages, 5 roundup posts, 5 comparison posts, and a few use-case guides. Internal linking matters a lot.</div>
-        </details>
-        <details class="faq-item">
-          <summary>Can I add AdSense later too?<span>+</span></summary>
-          <div class="faq-content">Yes, but do not clutter the pages. If the site gets traffic, you can combine AdSense with affiliate links and email capture.</div>
-        </details>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="logo" style="margin-bottom:12px;">
-            <div class="logo-badge">TW</div>
-            <div>
-              <div>ToolTrend Works</div>
-              <div style="font-size:12px;color:var(--muted);font-weight:600;">Practical tool recommendations</div>
-            </div>
-          </div>
-          <p style="max-width:52ch;">A modern affiliate website template focused on AI tools, creator apps, and productivity software. Built for GitHub Pages, clean design, and easy scaling.</p>
-        </div>
-        <div>
-          <h4>Categories</h4>
-          <div class="footer-links">
-            <a href="#trending">AI tools</a>
-            <a href="#trending">Video software</a>
-            <a href="#trending">Productivity apps</a>
-            <a href="#trending">Design tools</a>
-          </div>
-        </div>
-        <div>
-          <h4>Pages</h4>
-          <div class="footer-links">
-            <a href="#comparison">Comparisons</a>
-            <a href="#guides">Guides</a>
-            <a href="#affiliate">Affiliate policy</a>
-            <a href="#faq">FAQ</a>
-          </div>
-        </div>
-        <div>
-          <h4>Legal</h4>
-          <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms</a>
-            <a href="#">Contact</a>
-            <a href="#">Disclaimer</a>
-          </div>
-        </div>
-      </div>
-      <div class="copyright">© 2026 ToolTrend Works. Built as an affiliate-ready starter website. Update the brand name, legal pages, article links, and affiliate URLs before launch.</div>
-    </div>
-  </footer>
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "ToolTrend Works",
-      "url": "https://yourdomain.works",
-      "description": "A modern affiliate-ready website covering AI tools, creator apps, and productivity software."
-    }
-  </script>
-
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Why is this website niche better than random trending news?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Software and AI tool queries are easier to monetize with affiliate links, easier to update, and safer for long-term SEO than one-day trends."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I use this website on GitHub Pages with my .works domain?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Yes. Upload the static HTML site to a GitHub repository, enable GitHub Pages, and connect the .works domain using the GitHub Pages custom-domain settings and DNS records."
-          }
-        }
-      ]
-    }
-  </script>
-
-  <script>
-    function subscribeUser(event) {
-      event.preventDefault();
-      alert('Newsletter form connected successfully. Replace this alert with Mailchimp, ConvertKit, or Formspree integration.');
-    }
-  </script>
-</body>
-</html>
+  );
+}
