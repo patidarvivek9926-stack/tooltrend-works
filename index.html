@@ -1,71 +1,834 @@
-import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Best Productivity Essentials in 2026 | ToolTrend Works</title>
+  <meta name="description" content="Explore practical tools that can improve focus, comfort, and productivity in daily work and study routines." />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121935;
+      --card: rgba(255,255,255,0.08);
+      --card-solid: #ffffff;
+      --text: #111827;
+      --muted: #5b6475;
+      --white: #ffffff;
+      --primary: #4f46e5;
+      --primary-2: #7c3aed;
+      --accent: #06b6d4;
+      --border: rgba(255,255,255,0.14);
+      --shadow: 0 15px 40px rgba(0,0,0,0.15);
+      --radius: 22px;
+      --max: 1180px;
+    }
 
-export default function SmartWorkSetup() {
-  const products = [
-    {
-      name: "Noise Cancelling Headphones",
-      description: "Helps you stay focused by blocking distractions while working or studying.",
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e",
-      link: "https://your-affiliate-link-1.com",
-    },
-    {
-      name: "Ergonomic Chair",
-      description: "Improves posture and prevents back pain during long work sessions.",
-      image: "https://images.unsplash.com/photo-1505843513577-22bb7d21e455",
-      link: "https://your-affiliate-link-2.com",
-    },
-    {
-      name: "Desk Lamp",
-      description: "Reduces eye strain and creates a comfortable working environment.",
-      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
-      link: "https://your-affiliate-link-3.com",
-    },
-    {
-      name: "Smart Watch",
-      description: "Tracks your productivity and reminds you to take breaks.",
-      image: "https://images.unsplash.com/photo-1510017803434-a899398421b3",
-      link: "https://your-affiliate-link-4.com",
-    },
-  ];
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background: #f5f7fb;
+      line-height: 1.6;
+    }
 
-  return (
-    <div className="min-h-screen bg-white text-gray-900 px-6 py-10 max-w-5xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6">
-        Best Setup for Maximum Productivity in 2026
-      </h1>
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
 
-      <p className="mb-6 text-lg text-gray-700">
-        In today’s fast-paced world, productivity is everything. Whether you're a student,
-        freelancer, or working professional, having the right tools can significantly
-        improve your focus, efficiency, and overall performance.
-      </p>
+    .hero-wrap {
+      background:
+        radial-gradient(circle at top left, rgba(6,182,212,0.25), transparent 30%),
+        radial-gradient(circle at top right, rgba(124,58,237,0.25), transparent 25%),
+        linear-gradient(135deg, #0b1020 0%, #101934 55%, #111827 100%);
+      color: var(--white);
+      overflow: hidden;
+      position: relative;
+    }
 
-      <p className="mb-10 text-gray-700">
-        Below are some essential products that can help you build a perfect productivity
-        setup. Each one plays a specific role in improving your workflow and reducing
-        distractions.
-      </p>
+    .hero-wrap::after {
+      content: "";
+      position: absolute;
+      inset: auto -120px -120px auto;
+      width: 320px;
+      height: 320px;
+      background: linear-gradient(135deg, rgba(79,70,229,0.35), rgba(6,182,212,0.15));
+      border-radius: 50%;
+      filter: blur(20px);
+    }
 
-      <div className="grid gap-6">
-        {products.map((item, index) => (
-          <Card key={index} className="rounded-2xl shadow-md">
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-full h-60 object-cover rounded-t-2xl"
-            />
-            <CardContent className="p-5">
-              <h2 className="text-2xl font-semibold mb-2">{item.name}</h2>
-              <p className="text-gray-600 mb-4">{item.description}</p>
-              <a href={item.link} target="_blank">
-                <Button className="w-full">Check Product</Button>
-              </a>
-            </CardContent>
-          </Card>
-        ))}
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(12px);
+    }
+
+    .nav-shell {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(11,16,32,0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      box-shadow: 0 10px 25px rgba(79,70,229,0.35);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+    }
+
+    .nav-links a:hover { color: #fff; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 38px;
+      padding: 56px 0 70px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.92);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08;
+      letter-spacing: -1.2px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.82);
+      margin: 18px 0 0;
+      max-width: 640px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: var(--white);
+      box-shadow: 0 14px 30px rgba(79,70,229,0.35);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white);
+    }
+
+    .hero-panel {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .mini-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .section {
+      padding: 74px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.8px;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 22px 0 30px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid #e6eaf2;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .chip.active, .chip:hover {
+      background: #111827;
+      color: white;
+      border-color: #111827;
+    }
+
+    .tips {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .tip-card {
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(16,24,40,0.06);
+      border: 1px solid #edf1f7;
+    }
+
+    .tip-card h3 { margin: 12px 0 8px; }
+    .tip-card p { margin: 0; color: var(--muted); }
+    .tip-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #eef2ff, #ecfeff);
+      font-size: 22px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .search {
+      flex: 1 1 260px;
+      background: white;
+      border: 1px solid #e6eaf2;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 16px 34px rgba(17,24,39,0.08);
+      border: 1px solid #edf1f7;
+      transition: 0.28s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 44px rgba(17,24,39,0.12);
+    }
+
+    .product-image-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .product-image-wrap img {
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.35s ease;
+    }
+
+    .product-card:hover .product-image-wrap img {
+      transform: scale(1.06);
+    }
+
+    .product-tag {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      background: rgba(17,24,39,0.82);
+      color: white;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      backdrop-filter: blur(8px);
+    }
+
+    .product-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .product-content h3 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .product-content p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .product-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 16px 0 18px;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f4f7fb;
+      color: #334155;
+      font-weight: 600;
+    }
+
+    .product-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .product-actions a {
+      flex: 1;
+    }
+
+    .btn-dark {
+      background: #111827;
+      color: white;
+      padding: 13px 16px;
+      border-radius: 14px;
+      display: inline-flex;
+      justify-content: center;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .btn-dark:hover { background: #1f2937; }
+
+    .btn-light {
+      background: #eef2ff;
+      color: #3730a3;
+      padding: 13px 16px;
+      border-radius: 14px;
+      display: inline-flex;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .insight-box {
+      margin-top: 30px;
+      background: linear-gradient(135deg, #111827, #1e293b);
+      color: white;
+      border-radius: 28px;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .insight-box p { color: rgba(255,255,255,0.82); margin: 10px 0 0; }
+
+    .faq {
+      display: grid;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .faq-item {
+      background: white;
+      border-radius: 18px;
+      border: 1px solid #edf1f7;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      border: none;
+      background: white;
+      font-size: 17px;
+      text-align: left;
+      padding: 18px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      display: none;
+      padding: 0 20px 18px;
+      color: var(--muted);
+    }
+
+    .faq-item.active .faq-answer { display: block; }
+
+    .footer {
+      background: #0f172a;
+      color: rgba(255,255,255,0.82);
+      padding: 28px 0 44px;
+      margin-top: 20px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .hidden { display: none !important; }
+
+    @media (max-width: 980px) {
+      .hero,
+      .products-grid,
+      .tips,
+      .insight-box {
+        grid-template-columns: 1fr 1fr;
+      }
+      .hero { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+      .tips,
+      .products-grid,
+      .insight-box {
+        grid-template-columns: 1fr;
+      }
+      .section { padding: 56px 0; }
+      .hero { padding: 38px 0 52px; }
+      .hero-panel { padding: 18px; }
+      .section-head { align-items: start; flex-direction: column; }
+      .product-image-wrap { height: 200px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-wrap">
+    <div class="nav-shell">
+      <div class="container nav">
+        <div class="brand">
+          <div class="brand-badge">⚡</div>
+          <div>ToolTrend Works</div>
+        </div>
+        <div class="nav-links">
+          <a href="#guide">Guide</a>
+          <a href="#products">Products</a>
+          <a href="#faq">FAQ</a>
+        </div>
       </div>
     </div>
-  );
-}
+
+    <div class="container hero">
+      <div>
+        <div class="eyebrow">Focus Better • Work Smarter • Stay Consistent</div>
+        <h1>Build a productivity routine that feels easier to follow every day.</h1>
+        <p>
+          A better work or study setup is not only about working longer. It is about reducing friction,
+          staying comfortable, and choosing tools that help you keep your attention on what matters.
+          The picks below are useful for focus, posture, lighting, and time management.
+        </p>
+        <div class="hero-actions">
+          <a href="#products" class="btn btn-primary">Explore Essentials</a>
+          <a href="#guide" class="btn btn-secondary">Read the Guide</a>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <h3 style="margin:0 0 10px; font-size: 24px;">A simple productivity formula</h3>
+        <p style="margin:0; color: rgba(255,255,255,0.8);">
+          Good productivity usually comes from a mix of fewer distractions, better comfort, and a routine you can actually repeat.
+        </p>
+        <div class="mini-grid">
+          <div class="mini-card">
+            <strong>Focus</strong>
+            <span>Reduce noise and visual clutter.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Comfort</strong>
+            <span>Support posture and reduce fatigue.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Lighting</strong>
+            <span>Make long sessions easier on the eyes.</span>
+          </div>
+          <div class="mini-card">
+            <strong>Routine</strong>
+            <span>Use reminders and time blocks well.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="guide">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>What actually makes a work setup more productive?</h2>
+          <p>
+            Many people think productivity depends only on motivation, but the environment around you also affects how easily you can start, how long you can stay focused, and how quickly you get tired. A useful setup removes small daily problems before they interrupt your routine.
+          </p>
+        </div>
+      </div>
+
+      <div class="tips">
+        <div class="tip-card">
+          <div class="tip-icon">🎧</div>
+          <h3>Lower distractions</h3>
+          <p>Noise from traffic, conversations, or nearby devices can break focus faster than most people realize.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🪑</div>
+          <h3>Stay comfortable longer</h3>
+          <p>When your back, neck, or wrists start hurting, your attention usually drops even if you still want to work.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💡</div>
+          <h3>Reduce eye strain</h3>
+          <p>Poor lighting increases fatigue and makes reading, writing, and screen time feel heavier than it should.</p>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <div>
+          <h3 style="margin:0; font-size:28px;">Small upgrades can make daily work feel smoother.</h3>
+          <p>
+            A better desk light, a more comfortable chair, or a tool that keeps distractions away can save far more time than people expect across a full month of work.
+          </p>
+        </div>
+        <div>
+          <h3 style="margin:0; font-size:22px;">How to choose wisely</h3>
+          <p>
+            Start with the problem you feel most often. If noise breaks your focus, fix that first. If your posture causes tiredness, improve seating first. Buying with a purpose usually works better than randomly upgrading everything together.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="products" style="padding-top: 10px;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Helpful tools for a better productivity setup</h2>
+          <p>
+            These are practical picks connected to the same goal: helping you work or study with fewer interruptions and better comfort. Use the search and category filters to quickly find what fits your setup.
+          </p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="searchInput" class="search" placeholder="Search products or topics..." />
+      </div>
+
+      <div class="chips" id="chips">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="focus">Focus</button>
+        <button class="chip" data-filter="comfort">Comfort</button>
+        <button class="chip" data-filter="lighting">Lighting</button>
+        <button class="chip" data-filter="routine">Routine</button>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <article class="product-card" data-category="focus" data-search="noise cancelling headphones focus distractions work study">
+          <div class="product-image-wrap">
+            <span class="product-tag">Focus</span>
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80" alt="Noise cancelling headphones" />
+          </div>
+          <div class="product-content">
+            <h3>Noise Cancelling Headphones</h3>
+            <p>Useful when outside noise keeps interrupting deep work, revision sessions, or meetings that require full attention.</p>
+            <div class="product-meta">
+              <span class="pill">Distraction control</span>
+              <span class="pill">Deep focus</span>
+            </div>
+            <div class="product-actions">
+              <a href="YOUR-AFFILIATE-LINK-1" target="_blank" rel="noreferrer" class="btn-dark">Check Product</a>
+              <a href="#faq" class="btn-light">Why useful</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="comfort" data-search="ergonomic chair posture comfort long work sessions back support">
+          <div class="product-image-wrap">
+            <span class="product-tag">Comfort</span>
+            <img src="https://images.unsplash.com/photo-1505843513577-22bb7d21e455?auto=format&fit=crop&w=1200&q=80" alt="Ergonomic chair" />
+          </div>
+          <div class="product-content">
+            <h3>Ergonomic Chair</h3>
+            <p>A better seat can support posture, reduce stiffness, and make longer work sessions feel less physically draining.</p>
+            <div class="product-meta">
+              <span class="pill">Posture support</span>
+              <span class="pill">Long sessions</span>
+            </div>
+            <div class="product-actions">
+              <a href="YOUR-AFFILIATE-LINK-2" target="_blank" rel="noreferrer" class="btn-dark">Check Product</a>
+              <a href="#faq" class="btn-light">Why useful</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="lighting" data-search="desk lamp lighting eye strain night study comfortable reading">
+          <div class="product-image-wrap">
+            <span class="product-tag">Lighting</span>
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80" alt="Desk lamp" />
+          </div>
+          <div class="product-content">
+            <h3>Desk Lamp</h3>
+            <p>Better lighting helps reduce eye strain and keeps your desk environment more comfortable during evening work or study.</p>
+            <div class="product-meta">
+              <span class="pill">Eye comfort</span>
+              <span class="pill">Desk clarity</span>
+            </div>
+            <div class="product-actions">
+              <a href="YOUR-AFFILIATE-LINK-3" target="_blank" rel="noreferrer" class="btn-dark">Check Product</a>
+              <a href="#faq" class="btn-light">Why useful</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="routine" data-search="smart watch break reminders routine productivity time management">
+          <div class="product-image-wrap">
+            <span class="product-tag">Routine</span>
+            <img src="https://images.unsplash.com/photo-1510017803434-a899398421b3?auto=format&fit=crop&w=1200&q=80" alt="Smart watch" />
+          </div>
+          <div class="product-content">
+            <h3>Smart Watch</h3>
+            <p>Useful for reminders, timer-based work blocks, and taking breaks before fatigue starts affecting attention.</p>
+            <div class="product-meta">
+              <span class="pill">Time blocks</span>
+              <span class="pill">Break reminders</span>
+            </div>
+            <div class="product-actions">
+              <a href="YOUR-AFFILIATE-LINK-4" target="_blank" rel="noreferrer" class="btn-dark">Check Product</a>
+              <a href="#faq" class="btn-light">Why useful</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="comfort" data-search="laptop stand neck strain better screen height desk comfort">
+          <div class="product-image-wrap">
+            <span class="product-tag">Comfort</span>
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80" alt="Laptop stand" />
+          </div>
+          <div class="product-content">
+            <h3>Laptop Stand</h3>
+            <p>Raises screen height to a more natural level and can make desk posture feel better during long laptop use.</p>
+            <div class="product-meta">
+              <span class="pill">Neck relief</span>
+              <span class="pill">Better angle</span>
+            </div>
+            <div class="product-actions">
+              <a href="YOUR-AFFILIATE-LINK-5" target="_blank" rel="noreferrer" class="btn-dark">Check Product</a>
+              <a href="#faq" class="btn-light">Why useful</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="product-card" data-category="focus" data-search="desk organizer clutter focus clean workspace productivity">
+          <div class="product-image-wrap">
+            <span class="product-tag">Focus</span>
+            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80" alt="Desk organizer" />
+          </div>
+          <div class="product-content">
+            <h3>Desk Organizer</h3>
+            <p>A cleaner workspace can reduce visual clutter and make it easier to begin tasks without small daily distractions.</p>
+            <div class="product-meta">
+              <span class="pill">Cleaner desk</span>
+              <span class="pill">Quick access</span>
+            </div>
+            <div class="product-actions">
+              <a href="YOUR-AFFILIATE-LINK-6" target="_blank" rel="noreferrer" class="btn-dark">Check Product</a>
+              <a href="#faq" class="btn-light">Why useful</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq" style="padding-top: 18px;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2>Quick questions people usually have</h2>
+          <p>
+            Choosing useful products becomes easier when you connect each one to a real problem in your routine rather than buying everything at once.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq">
+        <div class="faq-item active">
+          <button class="faq-question">Which product should I improve first?<span>+</span></button>
+          <div class="faq-answer">Start with the biggest problem you feel daily. If noise distracts you most, focus tools matter first. If body pain or tiredness is the issue, comfort products usually create the biggest change.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">Do I need all of these products together?<span>+</span></button>
+          <div class="faq-answer">Not necessarily. A better setup works best when it grows around your real needs. Even one useful upgrade can improve your routine more than several random purchases.</div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">How do I add my own product links here?<span>+</span></button>
+          <div class="faq-answer">Replace each placeholder link like YOUR-AFFILIATE-LINK-1 with your actual product URL. You can also duplicate any product card block to add more items in the same layout.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>ToolTrend Works</strong><br />
+        Better picks for focus, comfort, and daily productivity.
+      </div>
+      <div>
+        <a href="#guide">Guide</a> • <a href="#products">Products</a> • <a href="#faq">FAQ</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const chips = document.querySelectorAll('.chip');
+    const cards = document.querySelectorAll('.product-card');
+    const searchInput = document.getElementById('searchInput');
+    let activeFilter = 'all';
+
+    function filterCards() {
+      const q = searchInput.value.toLowerCase().trim();
+      cards.forEach(card => {
+        const category = card.dataset.category;
+        const text = card.dataset.search;
+        const matchCategory = activeFilter === 'all' || category === activeFilter;
+        const matchSearch = !q || text.includes(q);
+        card.classList.toggle('hidden', !(matchCategory && matchSearch));
+      });
+    }
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeFilter = chip.dataset.filter;
+        filterCards();
+      });
+    });
+
+    searchInput.addEventListener('input', filterCards);
+
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>
