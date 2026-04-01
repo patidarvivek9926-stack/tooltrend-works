@@ -1,287 +1,590 @@
-import React, { useMemo, useState } from "react";
-import { Search, ShoppingBag, Star, ArrowRight, Filter, Heart, ShieldCheck, Truck, Sparkles } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { motion } from "framer-motion";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ToolTrend Works</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-const products = [
-  {
-    id: 1,
-    name: "Wireless Noise-Canceling Headphones",
-    category: "Electronics",
-    price: "₹7,999",
-    rating: 4.8,
-    tag: "Best Seller",
-    description: "Premium sound, deep bass, long battery backup, and a sleek modern finish.",
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80",
-    url: "https://your-affiliate-link-1.com",
-  },
-  {
-    id: 2,
-    name: "Smart Fitness Band",
-    category: "Wearables",
-    price: "₹2,499",
-    rating: 4.5,
-    tag: "Trending",
-    description: "Track heart rate, sleep, activity, and stay connected with smart notifications.",
-    image:
-      "https://images.unsplash.com/photo-1510017803434-a899398421b3?auto=format&fit=crop&w=1200&q=80",
-    url: "https://your-affiliate-link-2.com",
-  },
-  {
-    id: 3,
-    name: "Minimal Desk Lamp",
-    category: "Home",
-    price: "₹1,899",
-    rating: 4.6,
-    tag: "Editor Pick",
-    description: "Modern study lamp with warm light tone and clean desk-friendly design.",
-    image:
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-    url: "https://your-affiliate-link-3.com",
-  },
-  {
-    id: 4,
-    name: "Portable Blender Bottle",
-    category: "Kitchen",
-    price: "₹1,599",
-    rating: 4.3,
-    tag: "Popular",
-    description: "Compact and travel-friendly blender for smoothies, shakes, and quick mixing.",
-    image:
-      "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=1200&q=80",
-    url: "https://your-affiliate-link-4.com",
-  },
-  {
-    id: 5,
-    name: "Ergonomic Office Chair",
-    category: "Furniture",
-    price: "₹12,499",
-    rating: 4.7,
-    tag: "Premium",
-    description: "Comfort-focused office chair with lumbar support and elegant styling.",
-    image:
-      "https://images.unsplash.com/photo-1505843513577-22bb7d21e455?auto=format&fit=crop&w=1200&q=80",
-    url: "https://your-affiliate-link-5.com",
-  },
-  {
-    id: 6,
-    name: "Skin Care Essentials Kit",
-    category: "Beauty",
-    price: "₹1,299",
-    rating: 4.4,
-    tag: "New",
-    description: "A simple and effective skincare combo designed for a clean daily routine.",
-    image:
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
-    url: "https://your-affiliate-link-6.com",
-  },
-];
+    body {
+      background: #f5f7fb;
+      color: #1f2937;
+    }
 
-const categories = ["All", ...new Set(products.map((p) => p.category))];
+    header {
+      background: linear-gradient(135deg, #0f172a, #1d4ed8);
+      color: white;
+      padding: 20px 8%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+    }
 
-export default function AffiliateProductSite() {
-  const [query, setQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-  const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
-      const matchesCategory =
-        selectedCategory === "All" || product.category === selectedCategory;
-      const matchesQuery =
-        product.name.toLowerCase().includes(query.toLowerCase()) ||
-        product.description.toLowerCase().includes(query.toLowerCase()) ||
-        product.category.toLowerCase().includes(query.toLowerCase());
-      return matchesCategory && matchesQuery;
-    });
-  }, [query, selectedCategory]);
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
 
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <section className="relative overflow-hidden border-b bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-100 via-white to-slate-100" />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-2 md:px-10 lg:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col justify-center"
-          >
-            <Badge className="mb-4 w-fit rounded-full px-4 py-1 text-sm">Top Picks</Badge>
-            <h1 className="max-w-xl text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Discover products that look good and perform better.
-            </h1>
-            <p className="mt-5 max-w-xl text-base leading-7 text-slate-600 md:text-lg">
-              A clean, modern product showcase website where you can list multiple items,
-              organize them by category, and send visitors directly to the product page.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#products">
-                <Button className="rounded-2xl px-6 py-6 text-base">
-                  Browse Products <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </a>
-              <Button variant="outline" className="rounded-2xl px-6 py-6 text-base">
-                <ShoppingBag className="mr-2 h-4 w-4" /> Clean UI Layout
-              </Button>
-            </div>
-            <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-              <div className="rounded-2xl border bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-2 text-sm font-medium"><ShieldCheck className="h-4 w-4" /> Trusted picks</div>
-              </div>
-              <div className="rounded-2xl border bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-2 text-sm font-medium"><Truck className="h-4 w-4" /> Fast access</div>
-              </div>
-              <div className="rounded-2xl border bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-2 text-sm font-medium"><Sparkles className="h-4 w-4" /> Smooth design</div>
-              </div>
-            </div>
-          </motion.div>
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="grid gap-4 sm:grid-cols-2"
-          >
-            {products.slice(0, 4).map((item) => (
-              <div key={item.id} className="overflow-hidden rounded-3xl border bg-white shadow-sm">
-                <img src={item.image} alt={item.name} className="h-48 w-full object-cover" />
-                <div className="p-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <Badge variant="secondary" className="rounded-full">{item.tag}</Badge>
-                    <div className="flex items-center gap-1 text-sm text-slate-600">
-                      <Star className="h-4 w-4 fill-current" /> {item.rating}
-                    </div>
-                  </div>
-                  <h3 className="mt-3 text-base font-semibold">{item.name}</h3>
-                  <p className="mt-1 text-sm text-slate-600">{item.price}</p>
-                </div>
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+      opacity: 0.95;
+    }
 
-      <section id="products" className="mx-auto max-w-7xl px-6 py-12 md:px-10 lg:px-12">
-        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight">Featured Products</h2>
-            <p className="mt-2 text-slate-600">Search, filter, and manage multiple product links in one clean interface.</p>
-          </div>
-          <div className="flex w-full flex-col gap-3 sm:flex-row md:w-auto">
-            <div className="relative min-w-[280px]">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-              <Input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search products..."
-                className="h-11 rounded-2xl border-slate-200 pl-10"
-              />
-            </div>
-            <div className="flex flex-wrap items-center gap-2 rounded-2xl border bg-white p-2 shadow-sm">
-              <Filter className="ml-1 h-4 w-4 text-slate-500" />
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`rounded-xl px-3 py-2 text-sm transition ${
-                    selectedCategory === category
-                      ? "bg-slate-900 text-white"
-                      : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+    .nav-links a:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
 
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          {filteredProducts.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: index * 0.05 }}
-            >
-              <Card className="group overflow-hidden rounded-[24px] border-0 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-                <div className="relative overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="h-64 w-full object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  <button className="absolute right-4 top-4 rounded-full bg-white/90 p-2 shadow-md backdrop-blur">
-                    <Heart className="h-4 w-4" />
-                  </button>
-                </div>
-                <CardContent className="p-5">
-                  <div className="flex items-center justify-between gap-3">
-                    <Badge variant="secondary" className="rounded-full">{product.category}</Badge>
-                    <div className="flex items-center gap-1 text-sm text-slate-600">
-                      <Star className="h-4 w-4 fill-current" /> {product.rating}
-                    </div>
-                  </div>
-                  <h3 className="mt-4 text-xl font-semibold leading-tight">{product.name}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{product.description}</p>
-                  <div className="mt-4 flex items-center justify-between">
-                    <span className="text-lg font-bold">{product.price}</span>
-                    <Badge className="rounded-full px-3 py-1">{product.tag}</Badge>
-                  </div>
-                  <div className="mt-5 flex gap-3">
-                    <a href={product.url} target="_blank" rel="noreferrer" className="flex-1">
-                      <Button className="h-11 w-full rounded-2xl">View Product</Button>
-                    </a>
-                    <Button variant="outline" className="h-11 rounded-2xl">Details</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
+    .hero {
+      padding: 70px 8%;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 40px;
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+    }
 
-        {filteredProducts.length === 0 && (
-          <div className="rounded-3xl border border-dashed bg-white p-10 text-center shadow-sm">
-            <h3 className="text-xl font-semibold">No products found</h3>
-            <p className="mt-2 text-slate-600">Try a different search term or switch category.</p>
-          </div>
-        )}
-      </section>
+    .hero h1 {
+      font-size: 50px;
+      line-height: 1.15;
+      margin-bottom: 18px;
+      color: #0f172a;
+    }
 
-      <section className="border-t bg-white">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-14 md:grid-cols-2 md:px-10 lg:px-12">
-          <div>
-            <h3 className="text-2xl font-bold">Why this layout works</h3>
-            <p className="mt-3 max-w-xl text-slate-600">
-              This structure is built for speed, clarity, and easy product expansion. You can keep adding cards,
-              categories, images, and links without changing the core design.
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-3xl border bg-slate-50 p-5">
-              <h4 className="font-semibold">Scalable product list</h4>
-              <p className="mt-2 text-sm text-slate-600">Just duplicate an object inside the products array and paste the new link.</p>
-            </div>
-            <div className="rounded-3xl border bg-slate-50 p-5">
-              <h4 className="font-semibold">Modern UI</h4>
-              <p className="mt-2 text-sm text-slate-600">Rounded cards, search, filters, hover effects, and a premium storefront feel.</p>
-            </div>
-            <div className="rounded-3xl border bg-slate-50 p-5">
-              <h4 className="font-semibold">Mobile friendly</h4>
-              <p className="mt-2 text-sm text-slate-600">Responsive layout works well on desktop, tablet, and phone screens.</p>
-            </div>
-            <div className="rounded-3xl border bg-slate-50 p-5">
-              <h4 className="font-semibold">Easy branding</h4>
-              <p className="mt-2 text-sm text-slate-600">You can replace title, logo, colors, hero text, and product categories anytime.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    .hero p {
+      font-size: 18px;
+      line-height: 1.7;
+      color: #475569;
+      margin-bottom: 28px;
+      max-width: 650px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+      transition: 0.25s ease;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: #1e3a8a;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-secondary:hover {
+      background: #f8fafc;
+      transform: translateY(-2px);
+    }
+
+    .hero-card {
+      background: white;
+      border-radius: 22px;
+      padding: 25px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+    }
+
+    .hero-card h3 {
+      font-size: 22px;
+      margin-bottom: 14px;
+      color: #0f172a;
+    }
+
+    .hero-card ul {
+      list-style: none;
+    }
+
+    .hero-card li {
+      padding: 12px 0;
+      border-bottom: 1px solid #e5e7eb;
+      color: #475569;
+    }
+
+    .hero-card li:last-child {
+      border-bottom: none;
+    }
+
+    .section {
+      padding: 65px 8%;
+    }
+
+    .section-title {
+      font-size: 34px;
+      margin-bottom: 14px;
+      color: #0f172a;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #64748b;
+      max-width: 700px;
+      margin: 0 auto 35px;
+      line-height: 1.7;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .search-box,
+    .filter-box {
+      background: white;
+      border: 1px solid #dbe2ea;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 260px;
+    }
+
+    .filter-box {
+      min-width: 180px;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .product-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      transition: 0.25s ease;
+      border: 1px solid #edf2f7;
+    }
+
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.14);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      background: #e2e8f0;
+    }
+
+    .product-content {
+      padding: 18px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 7px 10px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+    }
+
+    .product-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .product-description {
+      font-size: 14px;
+      color: #64748b;
+      line-height: 1.6;
+      min-height: 66px;
+      margin-bottom: 14px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .product-price {
+      font-size: 22px;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .rating {
+      font-size: 14px;
+      color: #f59e0b;
+      font-weight: bold;
+    }
+
+    .buy-btn {
+      width: 100%;
+      text-align: center;
+      background: #0f172a;
+      color: white;
+      text-decoration: none;
+      padding: 13px 14px;
+      border-radius: 12px;
+      display: inline-block;
+      font-weight: bold;
+      transition: 0.25s ease;
+    }
+
+    .buy-btn:hover {
+      background: #1d4ed8;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      border: 1px solid #edf2f7;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .feature-card p {
+      color: #64748b;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .about {
+      background: #0f172a;
+      color: white;
+      border-radius: 24px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .about p {
+      color: #cbd5e1;
+      max-width: 800px;
+      margin: 16px auto 0;
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    footer {
+      margin-top: 30px;
+      background: #020617;
+      color: #cbd5e1;
+      text-align: center;
+      padding: 24px 8%;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 50px;
+      }
+
+      .hero h1 {
+        font-size: 38px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .logo {
+        font-size: 22px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">ToolTrend Works</div>
+      <div class="nav-links">
+        <a href="#products">Products</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h1>Discover Products that look good and perform better.</h1>
+      <p>
+        A clean, modern product showcase website where you can list multiple items,
+        organize them by category, and send visitors directly to the product page.
+      </p>
+      <div class="hero-buttons">
+        <a href="#products" class="btn btn-primary">Browse Products</a>
+        <a href="#features" class="btn btn-secondary">Clean UI Layout</a>
+      </div>
     </div>
-  );
-}
+
+    <div class="hero-card">
+      <h3>Why this website works</h3>
+      <ul>
+        <li>Clean product cards with attractive layout</li>
+        <li>Fast search and category filter</li>
+        <li>Mobile friendly responsive design</li>
+        <li>Direct product buttons for easy clicks</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="products">
+    <h2 class="section-title">Featured Products</h2>
+    <p class="section-subtitle">
+      Add your favorite products here. You can replace product names, images, prices,
+      descriptions, and links anytime.
+    </p>
+
+    <div class="controls">
+      <input type="text" id="searchInput" class="search-box" placeholder="Search products..." />
+      <select id="categoryFilter" class="filter-box">
+        <option value="All">All Categories</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Home">Home</option>
+        <option value="Fitness">Fitness</option>
+        <option value="Beauty">Beauty</option>
+      </select>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+  <section class="section" id="features">
+    <h2 class="section-title">Why Choose This Design</h2>
+    <p class="section-subtitle">
+      This layout is made for product showcasing, better click-through rate,
+      and a professional look without making the page heavy or confusing.
+    </p>
+
+    <div class="features">
+      <div class="feature-card">
+        <h3>Modern Cards</h3>
+        <p>Every product appears inside a stylish card with image, price, rating, and button.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Responsive Layout</h3>
+        <p>The full website automatically adjusts on laptop, tablet, and mobile screens.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Easy to Edit</h3>
+        <p>You only need to update product data in one place to change everything on the page.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Fast Loading</h3>
+        <p>This is plain HTML, CSS, and JavaScript, so it works directly on GitHub Pages.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="about">
+      <h2 class="section-title" style="color: white;">About ToolTrend Works</h2>
+      <p>
+        ToolTrend Works is built for showcasing useful products in a clean and engaging format.
+        You can customize this website for gadgets, home products, beauty items, fitness gear,
+        or any other category you want to display.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 ToolTrend Works. All rights reserved.
+  </footer>
+
+  <script>
+    const products = [
+      {
+        name: "Wireless Noise-Cancelling Headphones",
+        category: "Electronics",
+        price: "₹7,999",
+        rating: "4.8 ★",
+        tag: "Best Seller",
+        description: "Premium sound quality, deep bass, long battery backup, and comfortable fit for daily use.",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80",
+        link: "https://example.com/product-1"
+      },
+      {
+        name: "Minimal Desk Lamp",
+        category: "Home",
+        price: "₹1,899",
+        rating: "4.6 ★",
+        tag: "Trending",
+        description: "Modern desk lamp with warm light tone, sleek design, and adjustable angle for study or work.",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80",
+        link: "https://example.com/product-2"
+      },
+      {
+        name: "Smart Fitness Band",
+        category: "Fitness",
+        price: "₹2,499",
+        rating: "4.5 ★",
+        tag: "Popular",
+        description: "Track steps, sleep, and heart rate with a lightweight fitness band designed for all-day wear.",
+        image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=80",
+        link: "https://example.com/product-3"
+      },
+      {
+        name: "Portable Blender Bottle",
+        category: "Home",
+        price: "₹1,299",
+        rating: "4.4 ★",
+        tag: "New",
+        description: "Handy portable blender for smoothies and shakes with a compact body and USB charging support.",
+        image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?auto=format&fit=crop&w=900&q=80",
+        link: "https://example.com/product-4"
+      },
+      {
+        name: "Skin Care Essentials Kit",
+        category: "Beauty",
+        price: "₹3,299",
+        rating: "4.7 ★",
+        tag: "Top Rated",
+        description: "A complete self-care kit with daily essentials for a fresh and polished skincare routine.",
+        image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=80",
+        link: "https://example.com/product-5"
+      },
+      {
+        name: "Ergonomic Office Chair",
+        category: "Home",
+        price: "₹12,999",
+        rating: "4.6 ★",
+        tag: "Comfort Pick",
+        description: "Comfortable office chair with lumbar support, smooth movement, and adjustable seat height.",
+        image: "https://images.unsplash.com/photo-1505843490701-5be5d1b3f5f8?auto=format&fit=crop&w=900&q=80",
+        link: "https://example.com/product-6"
+      }
+    ];
+
+    const productGrid = document.getElementById("productGrid");
+    const searchInput = document.getElementById("searchInput");
+    const categoryFilter = document.getElementById("categoryFilter");
+
+    function renderProducts() {
+      const searchText = searchInput.value.toLowerCase().trim();
+      const selectedCategory = categoryFilter.value;
+
+      const filteredProducts = products.filter(product => {
+        const matchesSearch =
+          product.name.toLowerCase().includes(searchText) ||
+          product.description.toLowerCase().includes(searchText) ||
+          product.category.toLowerCase().includes(searchText);
+
+        const matchesCategory =
+          selectedCategory === "All" || product.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+      });
+
+      if (filteredProducts.length === 0) {
+        productGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align:center; padding:40px; background:white; border-radius:18px; box-shadow:0 10px 25px rgba(15,23,42,0.08);">
+            <h3 style="margin-bottom:10px; color:#0f172a;">No products found</h3>
+            <p style="color:#64748b;">Try changing the search text or category filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      productGrid.innerHTML = filteredProducts.map(product => `
+        <div class="product-card">
+          <img src="${product.image}" alt="${product.name}">
+          <div class="product-content">
+            <span class="badge">${product.tag}</span>
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-description">${product.description}</p>
+            <div class="price-row">
+              <div class="product-price">${product.price}</div>
+              <div class="rating">${product.rating}</div>
+            </div>
+            <a href="${product.link}" target="_blank" class="buy-btn">View Product</a>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    searchInput.addEventListener("input", renderProducts);
+    categoryFilter.addEventListener("change", renderProducts);
+
+    renderProducts();
+  </script>
+
+</body>
+</html>
